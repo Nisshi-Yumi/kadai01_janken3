@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+    <title>ルークとじゃんけん</title>
+    <style>
+       
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+        .choice-image {
+            width: 100px;
+            height: 100px;
+        }
+        .result {
+            text-align: center;
+            margin: 20px;
+        }
+        .computer-choice-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .computer-choice-image {
+            width: 100px;
+            height: 100px;
+            display: none;
+        }
+        .computer-choice-text {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>ルークとじゃんけん</h1>
+    <div class="choices">
+        <button onclick="playGame('グー')">
+            <img src="img/ぐー.jpg" alt="グー" class="choice-image">
+            <span>グー</span>
+        </button>
+        <button onclick="playGame('チョキ')">
+            <img src="img/ちょき.jpg" alt="チョキ" class="choice-image">
+            <span>チョキ</span>
+        </button>
+        <button onclick="playGame('パー')">
+            <img src="img/ぱー.jpg" alt="パー" class="choice-image">
+            <span>パー</span>
+        </button>
+    </div>
+    <div class="result">
+        <p id="message">選んでね！</p>
+        <p id="score">勝: 0 負: 0</p>
+        <div id="computerChoiceContainer" class="computer-choice-container">
+            <p>コンピュータの手:</p>
+            <img id="computerChoiceImage" src="" alt="コンピュータの手" class="computer-choice-image">
+            <p id="computerChoiceText" class="computer-choice-text"></p>
+        </div>
+    </div>
+
+    <script>
+        let winCount = 0;
+        let loseCount = 0;
+
+        function playGame(playerChoice) {
+            const choices = ['グー', 'チョキ', 'パー'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let message = '';
+
+            if (playerChoice == computerChoice) {
+                message = `あいこ！あなたもコンピュータも ${playerChoice} を選びました。`;
+            } else if (
+                (playerChoice == 'グー' && computerChoice == 'チョキ') ||
+                (playerChoice == 'チョキ' && computerChoice == 'パー') ||
+                (playerChoice == 'パー' && computerChoice == 'グー')
+            ) {
+                message = `勝ち！あなたは ${playerChoice} を選び、コンピュータは ${computerChoice} を選びました。`;
+                winCount++;
+            } else {
+                message = `負け！あなたは ${playerChoice} を選び、コンピュータは ${computerChoice} を選びました。`;
+                loseCount++;
+            }
+
+            document.getElementById('message').textContent = message;
+            document.getElementById('score').textContent = `勝: ${winCount} 負: ${loseCount}`;
+
+            let computerChoiceImage = document.getElementById('computerChoiceImage');
+            let computerChoiceText = document.getElementById('computerChoiceText');
+            switch(computerChoice) {
+                case 'グー':
+                    computerChoiceImage.src = 'img/ぐー.jpg';
+                    computerChoiceText.textContent = 'グー';
+                    break;
+                case 'チョキ':
+                    computerChoiceImage.src = 'img/ちょき.jpg';
+                    computerChoiceText.textContent = 'チョキ';
+                    break;
+                case 'パー':
+                    computerChoiceImage.src = 'img/ぱー.jpg';
+                    computerChoiceText.textContent = 'パー';
+                    break;
+            }
+            computerChoiceImage.style.display = 'block';
+            computerChoiceText.style.display = 'block';
+        }
+    </script>
+</body>
+    </html>
